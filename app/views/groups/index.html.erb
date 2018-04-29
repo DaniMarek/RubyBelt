@@ -1,0 +1,42 @@
+<div class="container-fluid bg-2 text-center">
+	<h2>Hello, <%= current_user.first_name.capitalize %>!</h2>
+		<button class="btn"><a class="btn" href="<%= logout_path %>" data_method="delete">Logout</a></button>
+	<div class="row">
+		<div class="col-sm-6">
+			<h3>Here are the organizations you may join:</h3>
+
+			<% @groups.each do |group| %>
+			<h3><a href="/groups/<%= group.id %>"><%= group.name %></a></h3>
+				<% if group.admin_id == current_user.id %>
+					<button class="btn"><a class="btn" href="/delete/<%= group.id %>">Delete</a></button>
+				<% end %>
+			<p>Members: <%= group.users.count %></p>
+			<!-- counts number of users associated with Users foreign key -->
+			<p><% group.description %></p>
+			<% end %>
+		</div>
+
+		<form class="form-horizontal col-sm-6" action="/groups" method="post">
+			<h3>Create a new organization:</h3>
+			<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="name">Group Name:</label>
+				<div class="col-sm-10">
+				<input type="text" class="form-control" name="name" placeholder="ex. Just Peel It">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="description">Description:</label>
+				<div class="col-sm-10">
+				<input type="text" class="form-control" name="description" placeholder="Banana Society Meetings">
+				</div>
+			</div>
+			<div class="form-group">
+				<button class="btn" type="submit">Create</button>
+			</div>
+			<div class="form-group">
+				<%= render 'partials/errors' %>
+			</div>
+		</form>
+
+</div>

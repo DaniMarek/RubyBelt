@@ -1,0 +1,15 @@
+<div class="container-fluid bg-2 text-center">
+	<h3><%= group.name %></h3>
+	<button class="btn"><a class="btn" href="/leave/<%= group.id %>">Leave Group</a></button>
+	
+	<h4><%= group.description %></h4>
+
+	<h3>Created by: <%= group.admin.first_name %> <%= group.admin.last_name %></h3>
+
+		<h3>Members:</h3>
+	<% group.users.each do |x|  %>
+		<p><%= x.first_name %> <%= x.last_name %></p>
+	<% end %>
+	<button class="btn"><a class="btn" href="<%= groups_path %>">Dashboard</a></button>
+	<button class="btn"><a class="btn" href="/logout" data_method="delete">Logout</a></button>
+</div>
